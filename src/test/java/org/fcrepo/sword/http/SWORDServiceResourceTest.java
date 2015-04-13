@@ -15,13 +15,11 @@
  */
 package org.fcrepo.sword.http;
 
+import org.apache.abdera.Abdera;
 import org.apache.abdera.model.Service;
+import org.fcrepo.http.commons.test.util.TestHelpers;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,13 +27,16 @@ import static org.junit.Assert.assertEquals;
  * @author claussni
  * @date 18.02.15.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/spring/sword.xml")
-@WebAppConfiguration
 public class SWORDServiceResourceTest {
 
-    @Autowired
     private SWORDServiceResource webResource;
+
+    @Before
+    public void setUp() {
+        webResource = new SWORDServiceResource();
+        final Abdera abdera = new Abdera();
+        TestHelpers.setField(webResource, "abdera", abdera);
+    }
 
     @Test
     public void hasSwordVersion2() {
